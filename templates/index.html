@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Invasive Species Identifier</title>
+  </head>
+  <body>
+    <h1>Upload an Image of an Invasive Plant</h1>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="image" required />
+      <input type="submit" value="Identify" />
+    </form>
+
+    {% if species %}
+    <h2>Prediction: {{ species }}</h2>
+    <p>{{ description }}</p>
+    <img src="{{ img_path }}" width="300" />
+    {% endif %}
+  </body>
+</html>
