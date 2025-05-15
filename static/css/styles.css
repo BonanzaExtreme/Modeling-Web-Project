@@ -1,0 +1,20 @@
+body {
+  padding-top: 20px;
+}
+.container {
+  max-width: 800px;
+}
+.prediction-img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+.prediction-box {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.prediction-title {
+  font-weight: bold;
+}
