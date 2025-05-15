@@ -2,18 +2,57 @@
 <html>
   <head>
     <title>Invasive Species Identifier</title>
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Upload an Image of an Invasive Plant</h1>
-    <form method="post" enctype="multipart/form-data">
-      <input type="file" name="image" required />
-      <input type="submit" value="Identify" />
-    </form>
+    <div class="container">
+      <header class="text-center mb-5">
+        <h1>Invasive Species Identifier</h1>
+        <p class="lead">
+          Upload an image of an invasive plant. The system will try to guess the
+          name of the plant
+        </p>
+      </header>
+      <section>
+        <form method="POST" enctype="multipart/form-data" class="text-center">
+          <div class="mb-3">
+            <label for="imageUpload" class="form-label"> Choose Image </label>
+            <input
+              type="file"
+              name="image"
+              id="imageUpload"
+              class="form-control"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Identify</button>
+        </form>
+      </section>
 
-    {% if species %}
-    <h2>Prediction: {{ species }}</h2>
-    <p>{{ description }}</p>
-    <img src="{{ img_path }}" width="300" />
-    {% endif %}
+      {% if species %}
+      <section class="prediction-box">
+        <h2 class="prediction-title">Prediction: {{ species }}</h2>
+        <h4>Common Name: {{ common_name }}</h4>
+        <p>{{ description }}</p>
+        <img src="{{ img_path }}" width="300" />
+      </section>
+      {% if top_predictions %}
+      <section>
+        <h3>Top 3 Predictions</h3>
+        <ul class="list-group">
+          {% for prediction in top_predictions %}
+          <li class="list-group-item">
+            <strong>{{ prediction.species_name }}:</strong> {{
+            prediction.probability }}%
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %} {% endif %}
+    </div>
   </body>
 </html>

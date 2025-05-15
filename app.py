@@ -32,13 +32,25 @@ def index():
             img_array = np.expand_dims(img_array, axis=0)
             img_array = preprocess_input(img_array)
 
-            # Predict dito 
+            # Predict dito and display of top 3 predicted results 
             preds = model.predict(img_array)
-            class_idx = np.argmax(preds)
-            species_name = class_names[class_idx]
-            description = species_info[species_name]
+            top_indices = np.argsort(preds[0])[::-1][:3]  # Get the top 3 predicted indices
+            top_predictions = [
+                {
+                    'species_name': class_names[idx],
+                    'probability': round(preds[0][idx] * 100, 2)
+                }
+                for idx in top_indices
+            ]
 
-            return render_template('index.html', species=species_name, description=description, img_path=filepath)
+            # Get top 1 prediction 
+            species_name = class_names[top_indices[0]]
+            
+            # Common name and description
+            common_name = species_info[species_name]["common_name"]
+            description = species_info[species_name]["description"] 
+
+            return render_template('index.html', species=species_name, common_name=common_name, description=description, top_predictions=top_predictions, img_path=filepath)
 
     return render_template('index.html', species=None)
 
